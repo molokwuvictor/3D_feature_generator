@@ -8,7 +8,7 @@ Features:
  - Permeability: (i) uniform distribution (ii) stochastic distribution using the unconditional Karhunen-Loeve (KL) expansion. 
 
 Labels: 
-if needed, first need to be created and stored in a local or remote directory before accessed by this module. Dataset label generation and storage could be an expensive process as it requires numerous numerical simulations.  
+if needed, are first created and stored in a local or remote directory before accessed by this module. Dataset label generation and storage could be an expensive process as it requires numerous numerical simulations.  
 
 ## Artificial-Intelligence-based learning technique and corresponding datasets
 Two types of AI-based learning techniques can be performed with the dataset: non-physics-based supervised learning and physics-based semi-supervised learning. 
