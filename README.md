@@ -6,6 +6,7 @@ Features:
  - Grid coordinates: 1 or 2-dimensional.
  - Porosity: constant.
  - Permeability: (i) uniform distribution (ii) stochastic distribution using the unconditional Karhunen-Loeve (KL) expansion. 
+
 Labels: 
 if needed, first need to be created and stored in a local or remote directory before accessed by this module. Dataset label generation and storage could be an expensive process as it requires numerous numerical simulations.  
 
