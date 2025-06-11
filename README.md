@@ -6,7 +6,7 @@
 
 The Karhunen-Loève expansion is a method for representing a stochastic process as an infinite linear combination of orthogonal functions. In the context of reservoir modeling, it is used to generate multiple realizations of spatially correlated permeability fields.
 
-For a random field <img src="https://latex.codecogs.com/svg.image?K(x)" alt="K(x)" style="vertical-align: middle;"/> with known mean <img src="https://latex.codecogs.com/svg.image?\mu(x)" alt="mu(x)" style="vertical-align: middle;"/> and covariance function <img src="https://latex.codecogs.com/svg.image?C(x,y)" alt="C(x,y)" style="vertical-align: middle;"/>, the KL expansion is given by:
+For a random field <img src="https://latex.codecogs.com/svg.image?K(x)" alt="K(x)" style="vertical-align: middle;" align="center"/> with known mean <img src="https://latex.codecogs.com/svg.image?\mu(x)" alt="mu(x)" style="vertical-align: middle;" align="center"/> and covariance function <img src="https://latex.codecogs.com/svg.image?C(x,y)" alt="C(x,y)" style="vertical-align: middle;" align="center"/>, the KL expansion is given by:
 
 <!--
 $$K(x) = \mu(x) + \sum_{i=1}^{\infty} \sqrt{\lambda_i} \xi_i \phi_i(x)$$
@@ -14,15 +14,15 @@ $$K(x) = \mu(x) + \sum_{i=1}^{\infty} \sqrt{\lambda_i} \xi_i \phi_i(x)$$
 <img src="https://latex.codecogs.com/svg.image?K(x)%20=%20\mu(x)%20+%20\sum_{i=1}^{\infty}%20\sqrt{\lambda_i}%20\xi_i%20\phi_i(x)" alt="KL Expansion Equation" align="center"/>
 
 Where:
-- <img src="https://latex.codecogs.com/svg.image?\lambda_i" alt="lambda_i" style="vertical-align: middle;"/> and <img src="https://latex.codecogs.com/svg.image?\phi_i(x)" alt="phi_i(x)" style="vertical-align: middle;"/> are eigenvalues and eigenfunctions of the covariance function.
-- <img src="https://latex.codecogs.com/svg.image?\xi_i" alt="xi_i" style="vertical-align: middle;"/> are independent standard normal random variables.
+- <img src="https://latex.codecogs.com/svg.image?\lambda_i" alt="lambda_i" style="vertical-align: middle;" align="center"/> and <img src="https://latex.codecogs.com/svg.image?\phi_i(x)" alt="phi_i(x)" style="vertical-align: middle;" align="center"/> are eigenvalues and eigenfunctions of the covariance function.
+- <img src="https://latex.codecogs.com/svg.image?\xi_i" alt="xi_i" style="vertical-align: middle;" align="center"/> are independent standard normal random variables.
 - In practice, the infinite sum is truncated to a finite number of terms based on an energy threshold.
 
 ### Log-Normal Permeability Model
 
 Since permeability is strictly positive, we model it as a log-normal field. If <!--
 $Z(x)$
---> <img src="https://latex.codecogs.com/svg.image?Z(x)" alt="Z(x)" style="vertical-align: middle;"/> is a normal random field, then <!--
+--> <img src="https://latex.codecogs.com/svg.image?Z(x)" alt="Z(x)" style="vertical-align: middle;" align="center"/> is a normal random field, then <!--
 $K(x) = e^{Z(x)}$
 -->
 <img src="https://latex.codecogs.com/svg.image?K(x)%20=%20e^{Z(x)}" alt="K(x) = e^{Z(x)}" align="center"/> is log-normal. The real distribution parameters are related to the log-normal distribution parameters by:
@@ -34,7 +34,7 @@ $$\mu_{log} = \ln(\mu_{real}) - 0.5\sigma_{log}^2$$
 <img src="https://latex.codecogs.com/svg.image?\sigma_{log}%20=%20\sqrt{\ln(1%20+%20(\sigma_{real}/\mu_{real})^2)}" alt="sigma_log equation" align="center"/>
 <img src="https://latex.codecogs.com/svg.image?\mu_{log}%20=%20\ln(\mu_{real})%20-%200.5\sigma_{log}^2" alt="mu_log equation" align="center"/>
 
-Where <img src="https://latex.codecogs.com/svg.image?\mu_{real}" alt="mu_real" style="vertical-align: middle;"/> and <img src="https://latex.codecogs.com/svg.image?\sigma_{real}" alt="sigma_real" style="vertical-align: middle;"/> are the desired mean and standard deviation of the physical permeability field.
+Where <img src="https://latex.codecogs.com/svg.image?\mu_{real}" alt="mu_real" style="vertical-align: middle;" align="center"/> and <img src="https://latex.codecogs.com/svg.image?\sigma_{real}" alt="sigma_real" style="vertical-align: middle;" align="center"/> are the desired mean and standard deviation of the physical permeability field.
 
 ### Conditional Simulation
 
@@ -46,12 +46,12 @@ $$K_{cond}(x) = K_{uncond}(x) + \mathbf{C}_{x,obs} \mathbf{C}_{obs,obs}^{-1} (\m
 <p align="center"><img src="https://latex.codecogs.com/svg.image?K_{cond}(x)%20=%20K_{uncond}(x)%20+%20\mathbf{C}_{x,obs}%20\mathbf{C}_{obs,obs}^{-1}%20(\mathbf{z}_{obs}%20-%20\mathbf{z}_{uncond,obs})" alt="Kriging adjustment equation"/></p>
 
 Where:
-- <img src="https://latex.codecogs.com/svg.image?K_{cond}(x)" alt="K_cond(x)" style="vertical-align: middle;"/> is the conditioned field at location <img src="https://latex.codecogs.com/svg.image?x" alt="x" style="vertical-align: middle;"/>.
-- <img src="https://latex.codecogs.com/svg.image?K_{uncond}(x)" alt="K_uncond(x)" style="vertical-align: middle;"/> is the unconditioned field at location <img src="https://latex.codecogs.com/svg.image?x" alt="x" style="vertical-align: middle;"/>.
-- <img src="https://latex.codecogs.com/svg.image?\mathbf{C}_{x,obs}" alt="C_x,obs" style="vertical-align: middle;"/> is the covariance between location <img src="https://latex.codecogs.com/svg.image?x" alt="x" style="vertical-align: middle;"/> and observation locations.
-- <img src="https://latex.codecogs.com/svg.image?\mathbf{C}_{obs,obs}" alt="C_obs,obs" style="vertical-align: middle;"/> is the covariance matrix of observation locations.
-- <img src="https://latex.codecogs.com/svg.image?\mathbf{z}_{obs}" alt="z_obs" style="vertical-align: middle;"/> are the observed log-permeability values.
-- <img src="https://latex.codecogs.com/svg.image?\mathbf{z}_{uncond,obs}" alt="z_uncond,obs" style="vertical-align: middle;"/> are the unconditioned field values at observation locations.
+- <img src="https://latex.codecogs.com/svg.image?K_{cond}(x)" alt="K_cond(x)" style="vertical-align: middle;" align="center"/> is the conditioned field at location <img src="https://latex.codecogs.com/svg.image?x" alt="x" style="vertical-align: middle;" align="center"/>.
+- <img src="https://latex.codecogs.com/svg.image?K_{uncond}(x)" alt="K_uncond(x)" style="vertical-align: middle;" align="center"/> is the unconditioned field at location <img src="https://latex.codecogs.com/svg.image?x" alt="x" style="vertical-align: middle;" align="center"/>.
+- <img src="https://latex.codecogs.com/svg.image?\mathbf{C}_{x,obs}" alt="C_x,obs" style="vertical-align: middle;" align="center"/> is the covariance between location <img src="https://latex.codecogs.com/svg.image?x" alt="x" style="vertical-align: middle;" align="center"/> and observation locations.
+- <img src="https://latex.codecogs.com/svg.image?\mathbf{C}_{obs,obs}" alt="C_obs,obs" style="vertical-align: middle;" align="center"/> is the covariance matrix of observation locations.
+- <img src="https://latex.codecogs.com/svg.image?\mathbf{z}_{obs}" alt="z_obs" style="vertical-align: middle;" align="center"/> are the observed log-permeability values.
+- <img src="https://latex.codecogs.com/svg.image?\mathbf{z}_{uncond,obs}" alt="z_uncond,obs" style="vertical-align: middle;" align="center"/> are the unconditioned field values at observation locations.
 
 ## Implementation
 
