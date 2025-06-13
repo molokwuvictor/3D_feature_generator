@@ -53,6 +53,10 @@ Where:
 - <img src="https://latex.codecogs.com/svg.image?\mathbf{z}_{obs}" alt="z_obs" style="vertical-align: middle;" align="center"/> are the observed log-permeability values.
 - <img src="https://latex.codecogs.com/svg.image?\mathbf{z}_{uncond,obs}" alt="z_uncond,obs" style="vertical-align: middle;" align="center"/> are the unconditioned field values at observation locations.
 
+![KL Expansion Example](KLE_image.png)
+
+*Figure 1: KL Expansion for 20 selected realizations.*
+
 ## Implementation
 
 The implementation consists of two main Python modules:
