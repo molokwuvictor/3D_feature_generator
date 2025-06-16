@@ -4,7 +4,7 @@
 
 ### Karhunen-Loève Expansion
 
-The Karhunen-Loève expansion is a method for representing a stochastic process as an infinite linear combination of orthogonal functions. In the context of reservoir modeling, it is used to generate multiple realizations of spatially correlated permeability fields.
+The Karhunen-Loève expansion (KLE) is a method for representing a stochastic process as an infinite linear combination of orthogonal functions. KLE utilizes optimal orthogonal basis functions, derived from the covariance matrix, to capture the maximum variance present in a dataset. It is particularly useful in describing heterogeneity, such as variations in permeability fields, where the covariance interactions between spatial locations are linear. In the context of surrogate reservoir modeling or uncertainty quantification, it can be used to generate multiple realizations of spatially correlated permeability fields.
 
 For a random field <img src="https://latex.codecogs.com/svg.image?K(x)" alt="K(x)" style="vertical-align: middle;" align="center"/> with known mean <img src="https://latex.codecogs.com/svg.image?\mu(x)" alt="mu(x)" style="vertical-align: middle;" align="center"/> and covariance function <img src="https://latex.codecogs.com/svg.image?C(x,y)" alt="C(x,y)" style="vertical-align: middle;" align="center"/>, the KL expansion is given by:
 
@@ -93,6 +93,138 @@ This module contains default configuration settings for various aspects of the A
 - Data processing pipeline.
 
 ## Usage
+
+### Basic Usage
+
+```python
+from KL_expansion import generate_kl_log_normal_real_params_3D
+import numpy as np
+
+# Generate 10 realizations of a 3D permeability field
+permeability_fields, num_modes, grid = generate_kl_log_normal_real_params_3D(
+    n_realizations=10,
+    Nx=39, Ny=39, Nz=5,
+    Lx=2900.0, Ly=2900.0, Lz=80.0,
+    real_mean=3.0, real_std=1.5,
+    corr_length_fac=0.2,
+    energy_threshold=0.95,
+    seed=2000
+)
+
+# Access the first realization
+first_realization = permeability_fields[0]
+```
+
+### Conditional Simulation
+
+```python
+# Define known permeability values at specific locations
+cond_values = {
+    (29, 29, 0): 2.0,  # (i,j,k) coordinates and permeability value
+    (29, 9, 0): 1.5,
+    (9, 9, 0): 1.0,
+    (9, 29, 0): 0.5
+}
+
+# Generate conditional realizations
+permeability_fields, num_modes, grid = generate_kl_log_normal_real_params_3D(
+    n_realizations=10,
+    Nx=39, Ny=39, Nz=1,
+    Lx=2900.0, Ly=2900.0, Lz=80.0,
+    real_mean=3.0, real_std=1.5,
+    corr_length_fac=0.2,
+    energy_threshold=0.95,
+    seed=2000,
+    cond_values=cond_values
+)
+```
+
+### Using the Realization Generator
+
+```python
+from kl_realizations_generator import KLConfig, generate_and_save_realizations
+from default_configurations import DEFAULT_GENERAL_CONFIG, DEFAULT_RESERVOIR_CONFIG, DEFAULT_WELLS_CONFIG
+
+# Create a KL configuration object
+kl_config = KLConfig(
+    number_of_realizations=100,
+    Nx=39, Ny=39, Nz=1,
+    Lx=2900.0, Ly=2900.0, Lz=80.0,
+    mean=3.0, std=1.5,
+    correlation_length_factor=0.2,
+    energy_threshold=0.95,
+    seed=2000
+)
+
+# Generate and save realizations
+output_dir = generate_and_save_realizations(
+    kl_config,
+    general_config=DEFAULT_GENERAL_CONFIG,
+    reservoir_config=DEFAULT_RESERVOIR_CONFIG,
+    wells_config=DEFAULT_WELLS_CONFIG,
+    save_compressed=True,
+    overwrite=True
+)
+```
+
+### Using Command Line Interface
+
+```bash
+python kl_realizations_generator.py --num-realizations 100 --nx 39 --ny 39 --nz 1 --lx 2900 --ly 2900 --lz 80 --mean 3.0 --std 1.5 --corr-length 0.2 --energy-threshold 0.95 --seed 2000 --output-dir ./output
+```
+
+## Parameter Documentation
+
+### KL Expansion Parameters
+
+| Parameter | Description | Default Value |
+|-----------|-------------|---------------|
+| `n_realizations` | Number of permeability field realizations to generate | 10 |
+| `Nx`, `Ny`, `Nz` | Grid dimensions in x, y, and z directions | 30, 30, 10 |
+| `Lx`, `Ly`, `Lz` | Physical dimensions along x, y, and z in feet/meters | 100.0, 50.0, 20.0 |
+| `real_mean` | Mean permeability (physical value) | 3.0 |
+| `real_std` | Standard deviation of permeability (physical value) | 1.0 |
+| `corr_length_fac` | Correlation length factor (as fraction of max dimension) | 0.2 |
+| `energy_threshold` | Fraction of total energy to capture (determines # of KL modes) | 0.95 |
+| `seed` | Random seed for reproducibility | 2000 |
+| `reverse_order` | Whether to output fields in (Nz,Ny,Nx) order (z,y,x) | False |
+| `cond_values` | Dictionary of conditional values at specific locations | None |
+| `dtype` | Data type for numerical calculations | np.float32 |
+
+### Configuration and Output Options
+
+| Parameter | Description | Default Value |
+|-----------|-------------|---------------|
+| `output_keyword` | Keyword to include in .dat files (e.g., "PERMX") | "PERMX" |
+| `comment_prefix` | Prefix for comment lines in .dat files | "--" |
+| `add_comments` | Whether to include comments in output files | True |
+| `save_compressed` | Whether to save compressed versions of the realizations | False |
+| `split_ratio` | Ratio for train/val/test split | (0.7, 0.0, 0.3) |
+| `split_sampling_method` | Method for splitting (random or sequential) | "random" |
+
+## Outputs
+
+The KL realization generator produces several outputs:
+
+1. **Realization files**: 
+   - Each realization as a separate .dat file in simulator-compatible format
+   - Complete numpy arrays of all realizations (.npy and optional .npz compressed)
+
+2. **Grid information**:
+   - Grid coordinates as numpy arrays (.npy format)
+   - Summary grid information in JSON format
+
+3. **Configuration**:
+   - Serialized configuration settings (JSON)
+   - Unique directories based on configuration hash for tracking experiments
+
+4. **Data splits**:
+   - Training, validation, and test subdirectories (when splitting is enabled)
+   - Indices for each split saved as numpy arrays
+
+## Examples
+
+Example of generating and visualizing 3D permeability fields:
 
 ```python
 from KL_expansion import generate_kl_log_normal_real_params_3D, plot_realizations_3D, plot_model_3d_grid
