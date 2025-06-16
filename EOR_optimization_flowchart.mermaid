@@ -1,0 +1,49 @@
+flowchart TD
+    A[Start: Case Study\nHigh Viscosity & Heterogeneous] --> B{Optimization Approach}
+    
+    B --> C[Surrogate Reservoir Models\nData-Driven Techniques]
+    B --> D[Hybrid-Injection Techniques\nScreening in Eclipse E300]
+    
+    %% Surrogate Modeling Branch
+    C --> C1[Data Generation\nReservoir Simulations]
+    C1 --> C2[Model Development]
+    
+    C2 --> C2_1[Response Surface Modeling]
+    C2 --> C2_2[Machine Learning/Deep Learning]
+    C2 --> C2_3[Convolutional Neural Networks]
+    C2 --> C2_4[Schlumberger Tools]
+    C2_4 --> C2_4_1[Petrel RE Uncertainty Analysis]
+    C2_4 --> C2_4_2[MEPO]
+    
+    C2_1 & C2_2 & C2_3 & C2_4 --> C3[Parameter Optimization]
+    
+    C3 --> C3_1[Water-Gas Ratio]
+    C3 --> C3_2[Slug Size]
+    C3 --> C3_3[Cycle Timing]
+    C3 --> C3_4[Injection Rate]
+    C3 --> C3_5[Injection Pressure]
+    
+    C3_1 & C3_2 & C3_3 & C3_4 & C3_5 --> C4[Optimize for Maximum NPV]
+    
+    %% Hybrid Injection Techniques Branch
+    D --> D1[Chemically Enhanced WAG]
+    D --> D2[Foam-Assisted WAG]
+    D --> D3[Hot Water-Assisted WAG]
+    D --> D4[Other Hybrid WAG Variations]
+    
+    D1 & D2 & D3 & D4 --> D5[Eclipse E300 Simulations]
+    
+    D5 --> D6[Performance Evaluation]
+    D6 --> D6_1[Recovery Factor]
+    D6 --> D6_2[Production Profiles]
+    D6 --> D6_3[Economic Metrics]
+    
+    %% Combining Results
+    C4 --> E[Comparative Analysis]
+    D6 --> E
+    
+    E --> F[Select Optimal EOR Strategy]
+    
+    F --> G[Implementation Plan\nfor Niger Delta Field]
+    
+    G --> H[End: Improved Recovery\nMaximized NPV]
