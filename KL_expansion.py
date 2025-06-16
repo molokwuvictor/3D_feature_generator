@@ -270,7 +270,7 @@ def plot_realizations_3D(permeability_fields,
         cbar = fig.colorbar(im, cax=cax)
         cbar.set_label(cbar_label, fontsize=10)
 
-        fig.suptitle(f"{title} (z-slice index = {slice_index} of Lz={Lz})", fontsize=16)
+        fig.suptitle(f"{title} (z-slice index = {slice_index} of Lz={Lz})", fontsize=16, y=0.95   )
         plt.tight_layout(rect=[0, 0, 0.98, 0.96])
         plt.show()
 

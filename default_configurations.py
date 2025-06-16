@@ -71,7 +71,7 @@ DEFAULT_GENERAL_CONFIG = {
                 'td': 0.0,   # Gas data loss (pressure)
                 'mbc': 0.5,  # Gas material balance
                 'cmbc': 0.0, # Gas cumulative material balance
-                'tte': 1.0,  # Gas time truncation error
+                'tde': 1.0,  # Gas time discretization error
             },
             'oil': {
                 'dom': 1.0,  # Oil domain loss
@@ -81,7 +81,7 @@ DEFAULT_GENERAL_CONFIG = {
                 'td': 0.0,   # Oil data loss (Sg|So)
                 'mbc': 0.5,  # Oil material balance
                 'cmbc': 0.0, # Oil cumulative material balance
-                'tte': 1.0,  # Oil time truncation error
+                'tde': 1.0,  # Oil time discretization error
             }
         },
         
