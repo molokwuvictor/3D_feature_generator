@@ -42,6 +42,7 @@ DEFAULT_GENERAL_CONFIG = {
     'minimum_srm_timestep': 0.1,
     'maximum_cfd_timestep': 1.,
     'minimum_cfd_timestep': 1.,
+
     # Data normalization settings
     # Possible methods: 'z-score', 'linear-scaling', 'lnk-linear-scaling'
     'data_normalization': {
@@ -192,7 +193,9 @@ DEFAULT_RESIDUAL_NETWORK_CONFIG = {
     'output_activation': tf.nn.sigmoid,
     'network_type': 'cnn',  # Use CNN layers by default
     'use_batch_norm': True,
-    'dropout_rate': 0.1
+    'dropout_rate': 0.1,
+    'time_step_module': True,
+    'number_of_timestep_bins': 50,                        # Used to model timesteps as a discrete categorical distribution
 }
 
 # Default configuration for Hard Layer
